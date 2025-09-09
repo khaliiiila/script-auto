@@ -1,0 +1,35 @@
+name: Absen Kolabjar
+
+on:
+  workflow_dispatch:
+    inputs:
+      users:
+        description: 'JSON array of users [[telegram_id,username,password], ...]'
+        required: true
+        default: '[["123456789","user1","password1"]]'
+      mode:
+        description: 'Mode absen (pagi/sore)'
+        required: true
+        default: 'pagi'
+
+jobs:
+  run-absen:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run absen script
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: |
+          python absen_kol.py '${{ github.event.inputs.users }}' ${{ github.event.inputs.mode }}
