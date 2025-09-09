@@ -30,6 +30,6 @@ jobs:
 
       - name: Run absen script
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.BOT_TOKEN_AUTO_1 }}
         run: |
           python absen_kol.py '${{ github.event.inputs.users }}' ${{ github.event.inputs.mode }}
